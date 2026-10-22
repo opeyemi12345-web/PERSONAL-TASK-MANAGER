@@ -1,0 +1,31 @@
+import "dotenv/config"; //reads .env into process.env
+import mongoose from "mongoose";
+import express from "express";
+import cors from "cors";
+import taskRouter from "./routes/taskRoutes";
+
+const app = express(); // was to start up the server in express
+
+const PORT = process.env.PORT || 6741;
+
+// CORS: only the CLient url address my call this api
+app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+// convert every request to json (javascript format)
+app.use(express.json());
+// Every End point must start with /api/tasks is handled by task router
+// .use is an in built middleware (middleman) that can be used to cn vert, check and validate requests
+app.use("/api/tasks", taskRouter);
+
+const startServer = async () => {
+  await mongoose.connect(process.env.MONGO_URL as string);
+
+  console.log("Database connected successfully");
+
+  app.listen(PORT, () => {
+    console.log(`server is running on port: ${PORT}`);
+  });
+};
+
+startServer();
+
+// cors: cross origin resources sharing
