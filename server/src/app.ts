@@ -27,5 +27,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-// cors: cross origin resources sharing
