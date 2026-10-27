@@ -1,8 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/Group 2.png";
 import profileImage from "../assets/Group 6.png";
 
 const Navbar = () => {
+  const { pathname } = useLocation(); //the current URL path, e.g."/tasks"
+
+  const allNavLinks = () => {
+    return pathname === "/" ? (
+      <>
+        <Link to="/tasks">All Tasks</Link>
+        <Link to="/new">New Task</Link>
+      </>
+    ) : pathname === "/tasks" ? (
+      <Link to="/new">New Task</Link>
+    ) : pathname === "/new" || "/edit" ? (
+      <Link to="/tasks">All Tasks</Link>
+    ) : null;
+  };
+
   return (
     <div className="bg-[#FAF9FB] border-[0.5px] border-[#B8B6B6]">
       <nav
@@ -10,24 +25,12 @@ const Navbar = () => {
       mx-auto h-23.25"
       >
         <Link to="/">
-          <img
-            src={logo}
-            alt=""
-            className="w-32 md:w-auto"
-          />
+          <img src={logo} alt="" className="w-32 md:w-auto" />
         </Link>
 
-        <div className="flex items-center gap-4 md:gap-6">
-          <Link to="/new">
-            New Task
-          </Link>
-
-          <Link to="/tasks">All Tasks</Link>
-          <img
-            src={profileImage}
-            alt=""
-            className="w-8 md:w-auto"
-          />
+        <div className="flex items-cneter gap-4 md:gap-6">
+          {allNavLinks()}
+          <img src={profileImage} alt="Profile" className="w-8 md:w-auto" />
         </div>
       </nav>
     </div>

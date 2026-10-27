@@ -48,7 +48,7 @@ export const updateTask = async (req: Request, res: Response) => {
     },
     {
       returnDocument: "after", // send back the task AFTER the update
-      runvalidators: true, // apply the rules in the model to the updates too
+      runValidators: true, // apply the rules in the model to the updates too
     },
   );
   if (!task) {
